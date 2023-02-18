@@ -19,7 +19,12 @@ export default async function handler(req, res) {
       break;
     case "POST":
       try {
-        const user = await User.create(req.body);
+        const check = await User.findOne({ email: JSON.parse(req.body).email });
+        if (check) {
+          res.status(200).json({ message: "User Already exists" });
+          break;
+        }
+        const user = await User.create(JSON.parse(req.body));
         res.status(201).json({ success: true, data: user });
       } catch (error) {
         res.status(400).json({ success: false });

@@ -1,22 +1,25 @@
 import Middle from "@/components/Procedure";
 import Footer from "@/components/Footer";
-import React from "react";
+import React, { Suspense } from "react";
 import Navbar from "../components/Navbar";
 import Hero from "@/components/Hero";
 import Contact from "@/components/Contact/Contact";
-import Head from "next/head";
-import { ToastContainer } from "react-toastify";
 
-function Home () {
+function Home() {
   return (
-    <Head>
+    // <Suspense fallback={<div>Loading...</div>}>
+    <div>
       <Navbar />
       <Hero />
       <Middle />
       <Contact />
       <Footer />
-      <ToastContainer />
-    </Head>
+    </div>
+    // </Suspense>
+
+    // <Head>
+
+    // </Head>
   );
 }
 

@@ -5,15 +5,17 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import styles from "../styles/Auth.module.css";
 import useToast from "/src/Hooks/useToast";
+import { useSession } from "next-auth/react";
 
 const loanDetails = () => {
+  const { data: session } = useSession();
   const router = useRouter();
   const [isBorrower, setIsBorrower] = useState(false);
   const [formData, setFormData] = useState({
     loanAmount: "",
     interestRate: "",
     tenure: "",
-    appliedBy: "Ansh",
+    // appliedBy: "Ansh",
   });
 
   const notify = useToast();
@@ -22,7 +24,9 @@ const loanDetails = () => {
   const maxLoanAmount = 10000;
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // router.push("/success");
+
+    if (!session) notify("error", "Please Login first");
+
     console.log(formData);
     if (formData.loanAmount && parseInt(formData.loanAmount) > maxLoanAmount) {
       notify("error", "Applied Amount cannot exceed max amount");
@@ -32,9 +36,9 @@ const loanDetails = () => {
         body: JSON.stringify({
           ...formData,
           appliedBy: {
-            userID: "63f07026ebbbe0901c409167",
-            name: "name",
-            email: "email",
+            // userID: "63f07026ebbbe0901c409167",
+            name: session.user.name,
+            email: session.user.email,
             phoneNumber: "12121212",
           },
         }),
@@ -47,19 +51,6 @@ const loanDetails = () => {
         notify("error", resjson.message);
       }
     }
-    // if (parseInt(formData.tenure) <= 1) {
-    //   toast.error("Tenure should be greater than 1 year", {
-    //     position: "top-center",
-    //     autoClose: 5000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    //     theme: "light",
-    //   });
-    //   alert("Tenure should be greater than 1 year");
-    // }
   };
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

@@ -1,16 +1,22 @@
 import { connect } from "../../../lib/mongodb";
 import Loan from "../../../models/Loan";
 import User from "../../../models/User";
+import { sendEmail } from "../../../lib/email";
 
 export default async function handler(req, res) {
   await connect();
   switch (req.method) {
     case "POST":
       try {
-        const { loanAmount } = JSON.parse(req.body);
-        const userid = JSON.parse(req.body).appliedBy.userID;
+        const { loanAmount, appliedBy, interestRate, tenure } = JSON.parse(
+          req.body
+        );
+        const useremail = appliedBy.email;
+        // if(!userid){
+        //   const
+        // }
         const user = await User.findOne({
-          _id: userid,
+          email: useremail,
         });
         if (!user) {
           res.status(400).json({ success: false, message: "No user found" });
@@ -20,6 +26,11 @@ export default async function handler(req, res) {
           const loan = await Loan.create({
             ...JSON.parse(req.body),
             status: "new",
+          });
+          await sendEmail({
+            to: useremail,
+            subject: "Applied for the loan successfully",
+            text: `Hi ${appliedBy.name}!. Congrats, You have successfully applied for a loan of amount ${loanAmount} at an interest rate of ${interestRate} with a tenure of ${tenure} years`,
           });
           res.status(201).json({ success: true, data: loan });
         } else {

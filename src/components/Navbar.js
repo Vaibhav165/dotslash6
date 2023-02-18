@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Stack, Box, Typography, Button } from "@mui/material";
 import styles from "../styles/Navbar.module.css";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { data: session } = useSession();
   return (
     <div>
       <Stack
@@ -14,55 +16,76 @@ function Navbar() {
         className={styles.Navbar}
       >
         <Box>
-          <Typography>
+          <p>
             <Link href="/" className={styles.nav_logo}>
               Loanify
             </Link>
-          </Typography>
+          </p>
         </Box>
         <Stack direction="row">
           <Link href="/" className={styles.nav_links}>
-            <Typography
+            <p
               sx={{
                 padding: "10px",
               }}
             >
               Home
-            </Typography>
+            </p>
           </Link>
           <Link href="/about" className={styles.nav_links}>
-            <Typography
+            <p
               sx={{
                 padding: "10px",
               }}
             >
               About Us
-            </Typography>
+            </p>
           </Link>
           <Link href="/contact" className={styles.nav_links}>
-            <Typography
+            <p
               sx={{
                 padding: "10px",
               }}
             >
               Contact
-            </Typography>
+            </p>
           </Link>
+
+          <Typography
+            sx={{
+              padding: "10px",
+            }}
+          >
+            {session && session.user.name}
+          </Typography>
         </Stack>
-        {isLoggedIn ? (
+        {/* {isLoggedIn ? (
           <>
             <Typography>Name</Typography>
-          </>
-        ) : (
-          <Box>
+          </> */}
+
+        <Box>
+          {session ? (
             <Link href="/loans" className={styles.signin_links}>
               <Button variant="contained">Lender</Button>
             </Link>
+          ) : (
+            <Link href="/" className={styles.signin_links}>
+              <Button variant="contained">Lender</Button>
+            </Link>
+          )}
+
+          {session ? (
             <Link href="/loanDetails" className={styles.signin_links}>
               <Button>Borrower</Button>
             </Link>
-          </Box>
-        )}
+          ) : (
+            <Link href="/" className={styles.signin_links}>
+              <Button>Borrower</Button>
+            </Link>
+          )}
+        </Box>
+        {/* )} */}
       </Stack>
     </div>
   );

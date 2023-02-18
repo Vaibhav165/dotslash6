@@ -12,8 +12,19 @@ function Loans() {
     console.log(resjson);
     setLoans(resjson.data);
   };
+  const loansByStatus = async () => {
+    const res = await fetch("/api/getLoanByStatus", {
+      method: "POST",
+      body: JSON.stringify({
+        status: "new",
+      }),
+    });
+    const resjson = await res.json();
+    setLoans(resjson.data);
+  };
   useEffect(() => {
-    fetchAllLoans();
+    // fetchAllLoans();
+    loansByStatus();
   }, []);
   return (
     <div>
