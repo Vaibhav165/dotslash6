@@ -94,6 +94,10 @@ const SignupCard = () => {
           <Link href="/signin" className={styles.navigate_link}>
             Already have an account
           </Link>
+
+          <Button type='submit' onClick={() => signIn()}>
+            Signin with google
+          </Button>
         </Card>
       </form>
     </>
@@ -163,9 +167,7 @@ export default SignupCard;
 // 						Already have an account
 // 					</Link>
 
-// 					<Button type='submit' onClick={() => signIn()}>
-// 						Signin with google
-// 					</Button>
+// 					
 // 				</Card>
 // 			</form>
 
@@ -174,7 +176,7 @@ export default SignupCard;
 // }
 
 export const getServerSideProps = async (context) => {
-  const session = getSession(context);
+  const session = await getSession(context);
   if (!session) {
     return {
       redirect: {

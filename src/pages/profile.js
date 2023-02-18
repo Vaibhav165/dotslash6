@@ -1,17 +1,3 @@
-<<<<<<< HEAD
-import Profile from '@/components/Profile/Profile'
-import React from 'react'
-
-const profile = () => {
-	return (
-		<div>
-			<Profile />
-		</div>
-	)
-}
-
-export default profile
-=======
 import { Grid, Box, Stack, Typography, Button, InputBase } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import ShareIcon from '@mui/icons-material/Share';
@@ -260,4 +246,3 @@ export const getServerSideProps = async (context) => {
 		props: { session }
 	}
 }
->>>>>>> 9f2c992041557c229ecc11bc116314a2e11dd738
