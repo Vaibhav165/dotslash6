@@ -1,0 +1,25 @@
+.item {
+  color: red;
+}
+
+.nav_logo {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 1em;
+  background-color: #1876d1;
+  padding: 8px;
+  color: white;
+  border-radius: 4px;
+}
+
+.nav_links {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 1em;
+  color: #1876d1;
+  padding: 1em;
+}
+
+.signin_links {
+  text-decoration: none;
+}
