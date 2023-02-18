@@ -10,21 +10,31 @@ const bankDetails = () => {
 		accountNumber: '',
 		IFC: '',
 		bankName: '',
+		salary: '',
 		pdfFile: null
 	});
 	// for signin and signup card
-	const handleSubmit = (e) => {
-		// dispatch
-		// const selectedFile = e.target.files[0];
-		// if (selectedFile && selectedFile.type === 'application/pdf') {
-		// 	setPdfFile(selectedFile);
-		// } else {
-		// 	setPdfFile(null);
-		// 	alert('Please select a PDF file.');
-		// }
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (!formData.IFC && !formData.accountNumber && !formData.accountNumber && !formData.bankName) {
-			alert('Fill the right information')
+			const res = await fetch('/api/users', {
+				method: 'Post',
+				body: JSON.stringify({
+					accountNumber: formData.accountNumber,
+					holderName: formData.holderName,
+					bankName: formData.bankName,
+					userId: '',
+					salary: formData.salary
+				})
+			})
+			const resjson = await res.json();
+			console.log(resjson);
+			if (resjson.success) {
+				notify("success", "Bank details verified");
+			} else {
+				notify("error", resjson.message);
+			}
+			router.push('/loanDetails');
 		}
 		if (!(formData.pdfFile && formData.pdfFile.type === 'application/pdf')) {
 			alert('Please select a PDF file.');
@@ -51,10 +61,15 @@ const bankDetails = () => {
 						Bank Details
 					</Typography>
 					<TextField placeholder='Account Number' value={formData.accountNumber} name='accountNumber' onChange={handleChange} className={styles.textFields} />
+
 					<TextField placeholder='IFC' value={formData.IFC} name='IFC' onChange={handleChange} className={styles.textFields} />
+
 					<TextField placeholder='Bank Name' value={formData.bankName} name='bankName' onChange={handleChange} className={styles.textFields} />
+
 					<TextField placeholder='Holder Name' value={formData.holderName} name='holderName' onChange={handleChange} className={styles.textFields} />
-					<TextField placeholder='Salary in numbers' value={formData.holderName} name='holderName' onChange={handleChange} className={styles.textFields} />
+
+					<TextField placeholder='Salary in numbers' value={formData.holderName} name='salary' onChange={handleChange} className={styles.textFields} type='number' />
+
 					<label htmlFor="pdf-file-input">Select a salary slip:</label>
 					<input id="pdf-file-input" type="file" accept=".pdf" onChange={handleChange} name='pdfFile' />
 					{/* only if signup is succssful then only */}

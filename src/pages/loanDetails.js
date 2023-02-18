@@ -18,10 +18,10 @@ const loanDetails = () => {
     // appliedBy: "Ansh",
   });
 
+  // const salary = Math.floor(Math.random() * 100000);
   const notify = useToast();
-
   // for signin and signup card
-  const maxLoanAmount = 10000;
+  const maxLoanAmount = 1000000;
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -50,8 +50,14 @@ const loanDetails = () => {
       } else {
         notify("error", resjson.message);
       }
+      router.push('/success');
     }
   };
+
+  let interest = parseInt(formData.loanAmount * (formData.interestRate * 0.01)) / (formData.tenure * 12);
+  let emiAmount = parseInt((formData.loanAmount / (formData.tenure * 12)) + interest)
+
+  console.log(emiAmount)
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -75,7 +81,7 @@ const loanDetails = () => {
             <Typography variant="h4" marginTop="1em">
               MAX LOAN AMOUNT
             </Typography>
-            <Typography variant="h3">1000</Typography>
+            <Typography variant="h3">{maxLoanAmount}</Typography>
           </Stack>
           <TextField
             placeholder="Loan Amount"
@@ -102,7 +108,7 @@ const loanDetails = () => {
             type="number"
           />
           <Typography variant="h5" margin="8px">
-            EMI: 1000/month
+            EMI: {emiAmount === NaN ? 0 : emiAmount}/month
           </Typography>
           {/* only if signup is succssful then only */}
 

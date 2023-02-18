@@ -9,6 +9,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSession } from 'next-auth/react';
 import { getSession } from 'next-auth/react';
+import BankDetails from '@/components/Profile/BankDetails';
+import Footer from '@/components/Footer';
 
 const profile = () => {
 	const { data: session, status } = useSession();
@@ -58,125 +60,17 @@ const profile = () => {
 	}
 	if (status === 'authenticated') {
 		return (
-			<Box>
-				<Grid container padding='2em' className='profileDetails_container'>
-					<Grid item xs={12} md={9} lg={9}>
-						<Stack className={styles.profileDetails}>
-							<Box className={styles.profileCover}></Box>
-							<img className={styles.profile_image} src={session.user.image} alt='profile' />
-							<Stack
-								justifyContent='space-between'
-								padding='60px'
-								marginTop='-6em'
-								sx={{
-									flexDirection: {
-										xs: 'column',
-										sm: 'column',
-										md: 'row',
-										lg: 'row'
-									},
-									alignItems: {
-										xs: 'flex-start',
-										sm: 'flex-start',
-										md: 'center',
-										lg: 'center'
-									}
-								}}>
-								<Box className={styles.profileName}>
-									<Typography variant='h3' fontWeight='700' color='#1876d1'>
-										{session.user.name}
-									</Typography>
-									<Typography
-										variant='p'
-										fontWeight='600'
-										color='#3f62cd'
-									>
-										{session.user.email}
-									</Typography>
-								</Box>
-								<Stack spacing='14px'>
-									<Button variant='contained'
-										sx={{
-											backgroundColor: "#1876d1",
-											borderRadius: '2em',
-											textTransform: 'initial'
-										}}>
-										<ShareIcon />
-										Share Profile
-									</Button>
-									{/* <Delete id={userInfo._id} /> */}
-								</Stack>
-							</Stack>
-						</Stack>
-						<Stack className={styles.profileSetting_container} spacing={3}>
-							<Typography variant='h5' fontWeight='700' color='#1876d1'>
-								Profile Setting
-							</Typography>
-							<Box className={styles.emailSetting}>
-								<Typography variant='h6' fontWeight='700' marginBottom='1em'>
-									Email Address
-								</Typography>
-								<Stack sx={{
-									flexDirection: {
-										xs: 'column',
-										sm: 'column',
-										md: 'row',
-										lg: 'row'
-									},
-									width: {
-										xs: '100%',
-										sm: '100%',
-										md: '90%',
-										lg: '90%'
-									}
-								}} justifyContent='space-between'>
-									<Stack direction="row" className={styles.emailChange_inpu} sx={{
-										width: {
-											xs: '100%',
-											sm: '100%',
-											md: '70%',
-											lg: '70%'
-										},
-										margin: {
-											xs: '10px 0',
-											sm: '10px 0',
-											md: '0 10px',
-											lg: '0 10px'
-										}
-									}} >
-										<Button sx={{ color: '#1876d1' }}>
-											<MailOutline />
-										</Button>
-										<InputBase
-											placeholder='Write new email address'
-											type='email'
-											fullWidth
-											value={session.user.email}
-											onChange={(e) => setEmail(e.target.value)} />
-									</Stack>
-									<Button variant='contained' sx={{
-										backgroundColor: "#1876d1",
-										borderRadius: '10px',
-										textTransform: 'initial',
-										width: '30%'
-									}}
-										onClick={submitHandler}>
-										Submit
-									</Button>
-								</Stack>
-							</Box>
-							<Box className={styles.nameSetting} sx={{
-								width: {
-									xs: '100%',
-									sm: '100%',
-									md: '90%',
-									lg: '90%'
-								}
-							}}>
-								<Typography variant='h6' fontWeight='700' marginBottom='1em'>
-									Name
-								</Typography>
-								<Stack justifyContent='space-between'
+			<>
+				<Box>
+					<Grid container padding='2em' className='profileDetails_container'>
+						<Grid item xs={12} md={9} lg={9}>
+							<Stack className={styles.profileDetails}>
+								<Box className={styles.profileCover}></Box>
+								<img className={styles.profile_image} src={session.user.image} alt='profile' />
+								<Stack
+									justifyContent='space-between'
+									padding='60px'
+									marginTop='-6em'
 									sx={{
 										flexDirection: {
 											xs: 'column',
@@ -184,49 +78,163 @@ const profile = () => {
 											md: 'row',
 											lg: 'row'
 										},
-										justifyContent: 'space-around'
+										alignItems: {
+											xs: 'flex-start',
+											sm: 'flex-start',
+											md: 'center',
+											lg: 'center'
+										}
 									}}>
-									<InputBase placeholder='Write new Name' className={styles.newName_input} sx={{
+									<Box className={styles.profileName}>
+										<Typography variant='h3' fontWeight='700' color='#1876d1'>
+											{session.user.name}
+										</Typography>
+										<Typography
+											variant='p'
+											fontWeight='600'
+											color='#3f62cd'
+										>
+											{session.user.email}
+										</Typography>
+									</Box>
+									<Stack spacing='14px'>
+										<Button variant='contained'
+											sx={{
+												backgroundColor: "#1876d1",
+												borderRadius: '2em',
+												textTransform: 'initial'
+											}}>
+											<ShareIcon />
+											Share Profile
+										</Button>
+										{/* <Delete id={userInfo._id} /> */}
+									</Stack>
+								</Stack>
+							</Stack>
+							<Stack className={styles.profileSetting_container} spacing={3}>
+								<Typography variant='h5' fontWeight='700' color='#1876d1'>
+									Profile Setting
+								</Typography>
+								<Box className={styles.emailSetting}>
+									<Typography variant='h6' fontWeight='700' marginBottom='1em'>
+										Email Address
+									</Typography>
+									<Stack sx={{
+										flexDirection: {
+											xs: 'column',
+											sm: 'column',
+											md: 'row',
+											lg: 'row'
+										},
 										width: {
 											xs: '100%',
 											sm: '100%',
-											md: '70%',
-											lg: '70%'
-										},
-										margin: {
-											xs: '10px 0',
-											sm: '10px 0',
-											md: '0 10px',
-											lg: '0 10px'
+											md: '90%',
+											lg: '90%'
 										}
-									}}
-										value={session.user.name}
-										onChange={e => setName(e.target.value)} />
-									<Button variant='contained' sx={{
-										backgroundColor: "#1876d1",
-										borderRadius: '10px',
-										textTransform: 'initial',
-										width: '30%'
-									}}
-										onClick={submitHandler}>
-										Submit
-									</Button>
-								</Stack>
-							</Box>
-						</Stack>
-						<Stack className={styles.historyContainer} sx={{
-							padding: {
-								xs: '16px',
-								sm: '16px',
-								md: '60px',
-								lg: '60px'
-							}
-						}}>
-							<History />
-						</Stack>
+									}} justifyContent='space-between'>
+										<Stack direction="row" className={styles.emailChange_inpu} sx={{
+											width: {
+												xs: '100%',
+												sm: '100%',
+												md: '70%',
+												lg: '70%'
+											},
+											margin: {
+												xs: '10px 0',
+												sm: '10px 0',
+												md: '0 10px',
+												lg: '0 10px'
+											}
+										}} >
+											<Button sx={{ color: '#1876d1' }}>
+												<MailOutline />
+											</Button>
+											<InputBase
+												placeholder='Write new email address'
+												type='email'
+												fullWidth
+												value={session.user.email}
+												onChange={(e) => setEmail(e.target.value)} />
+										</Stack>
+										<Button variant='contained' sx={{
+											backgroundColor: "#1876d1",
+											borderRadius: '10px',
+											textTransform: 'initial',
+											width: '30%'
+										}}
+											onClick={submitHandler}>
+											Submit
+										</Button>
+									</Stack>
+								</Box>
+								<Box className={styles.nameSetting} sx={{
+									width: {
+										xs: '100%',
+										sm: '100%',
+										md: '90%',
+										lg: '90%'
+									}
+								}}>
+									<Typography variant='h6' fontWeight='700' marginBottom='1em'>
+										Name
+									</Typography>
+									<Stack justifyContent='space-between'
+										sx={{
+											flexDirection: {
+												xs: 'column',
+												sm: 'column',
+												md: 'row',
+												lg: 'row'
+											},
+											justifyContent: 'space-around'
+										}}>
+										<InputBase placeholder='Write new Name' className={styles.newName_input} sx={{
+											width: {
+												xs: '100%',
+												sm: '100%',
+												md: '70%',
+												lg: '70%'
+											},
+											margin: {
+												xs: '10px 0',
+												sm: '10px 0',
+												md: '0 10px',
+												lg: '0 10px'
+											}
+										}}
+											value={session.user.name}
+											onChange={e => setName(e.target.value)} />
+										<Button variant='contained' sx={{
+											backgroundColor: "#1876d1",
+											borderRadius: '10px',
+											textTransform: 'initial',
+											width: '30%'
+										}}
+											onClick={submitHandler}>
+											Submit
+										</Button>
+									</Stack>
+								</Box>
+							</Stack>
+							<Stack className={styles.historyContainer} sx={{
+								padding: {
+									xs: '16px',
+									sm: '16px',
+									md: '60px',
+									lg: '60px'
+								}
+							}}>
+								<History />
+							</Stack>
+						</Grid>
+						<Grid item md={3} lg={2} border="1px solid #e5c3fa" borderRadius='10px'>
+							<BankDetails />
+						</Grid>
 					</Grid>
-				</Grid>
-			</Box>
+				</Box>
+				<Footer />
+			</>
 		)
 	}
 }

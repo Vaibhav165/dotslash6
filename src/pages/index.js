@@ -5,21 +5,17 @@ import Navbar from "../components/Navbar";
 import Hero from "@/components/Hero";
 import Contact from "@/components/Contact/Contact";
 
-function Home() {
+function Home () {
   return (
-    // <Suspense fallback={<div>Loading...</div>}>
-    <div>
-      <Navbar />
-      <Hero />
-      <Middle />
-      <Contact />
-      <Footer />
-    </div>
-    // </Suspense>
-
-    // <Head>
-
-    // </Head>
+    <Suspense fallback={<div>Loading...</div>}>
+      <div>
+        <Navbar />
+        <Hero />
+        <Middle />
+        <Contact />
+        <Footer />
+      </div>
+    </Suspense>
   );
 }
 

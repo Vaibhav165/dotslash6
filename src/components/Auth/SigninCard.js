@@ -5,6 +5,7 @@ import { useSession, signIn, signOut, getSession } from "next-auth/react";
 import styles from "../../styles/Auth.module.css";
 
 const SigninCard = () => {
+
   const { data: session } = useSession();
   const [isBorrower, setIsBorrower] = useState(false);
   const handleSwitch = () => {
@@ -17,18 +18,19 @@ const SigninCard = () => {
   // for signin and signup card
   const [isSignup, setIsSignup] = useState(false);
   const [checkPassword, setCheckPassword] = useState(false);
-  const handleSubmit = (e) => {
-    // dispatch
-    e.preventDefault();
-    console.log(formData);
-  };
+  // const handleSubmit = (e) => {
+  //   // dispatch
+  //   e.preventDefault();
+  //   console.log(formData);
+  // };
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
         <Card
           sx={{
             width: {

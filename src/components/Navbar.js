@@ -1,10 +1,4 @@
-import React, { useState } from "react";
-import { Stack, Box, Typography, Button } from "@mui/material";
-import styles from "../styles/Navbar.module.css";
-import Link from "next/link";
-import { useSession } from "next-auth/react";
-
-function Navbar() {
+function Navbar () {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { data: session } = useSession();
   return (
@@ -92,3 +86,17 @@ function Navbar() {
 }
 
 export default Navbar;
+
+export const getServerSideProps = async (context) => {
+  const session = await getSession(context);
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/sigin'
+      }
+    }
+  }
+  return {
+    props: { session }
+  }
+}
