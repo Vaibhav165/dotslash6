@@ -26,6 +26,10 @@ const loanSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  loanGivenBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 module.exports = mongoose.models.Loans || mongoose.model("Loans", loanSchema);
