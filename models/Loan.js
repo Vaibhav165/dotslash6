@@ -14,8 +14,8 @@ const loanSchema = new mongoose.Schema({
     required: true,
   },
   appliedBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    type: Object,
+    required: true,
   },
   appliedAt: {
     type: Date,
@@ -27,8 +27,7 @@ const loanSchema = new mongoose.Schema({
     required: true,
   },
   loanGivenBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    type: Object,
   },
 });
 

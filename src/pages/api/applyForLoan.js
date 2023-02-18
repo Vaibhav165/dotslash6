@@ -11,13 +11,13 @@ export default async function handler(req, res) {
         if (!loan) {
           res.status(200).json({ success: false, message: "No loan found" });
         }
-        const user = await User.findOne({ _id: req.body.userId });
+        const user = await User.findOne({ _id: req.body.giverInfo.userId });
         if (!user) {
           res.status(200).json({ success: false, message: "No user found" });
         }
         const newloan = await Loan.findByIdAndUpdate(req.body.loanId, {
           status: "ongoing",
-          loanGivenBy: req.body.userId,
+          loanGivenBy: req.body.giverInfo,
         });
         res.status(200).json({
           success: true,

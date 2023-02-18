@@ -12,7 +12,7 @@ export default async function handler(req, res) {
           res.status(200).json({ success: false, message: "No loan found" });
           break;
         }
-        const user = await User.findOne({ _id: loan.appliedBy });
+        const user = await User.findOne({ _id: loan.appliedBy.userID });
         if (user.maxLoanAmount >= req.body.loanAmount) {
           const newloan = await Loan.findByIdAndUpdate(req.body.loanId, {
             loanAmount: req.body.loanAmount,

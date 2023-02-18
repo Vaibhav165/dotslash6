@@ -15,14 +15,14 @@ const userSchema = new mongoose.Schema({
   },
   contactNumber: {
     type: String,
-    required: true,
+    // required: true,
   },
   CIBIL: {
     type: Number,
   },
   maxLoanAmount: {
     type: Number,
-    required: true,
+    // required: true,
   },
 });
 

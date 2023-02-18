@@ -1,5 +1,5 @@
 {
-  "name": "dotslash6",
+  "name": "dotslash",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,22 +12,28 @@
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@mui/icons-material": "^5.11.9",
     "@mui/material": "^5.11.9",
     "@next/font": "13.1.6",
     "@react-email/container": "0.0.7",
     "@react-email/html": "0.0.4",
     "@react-email/section": "0.0.8",
     "@react-email/text": "0.0.4",
+    "bcryptjs": "^2.4.3",
     "eslint": "8.34.0",
     "eslint-config-next": "13.1.6",
     "mongoose": "^6.9.2",
     "next": "13.1.6",
+    "next-auth": "^4.19.2",
     "nodemailer": "^6.9.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-email": "1.7.13"
   },
   "devDependencies": {
-    "@types/nodemailer": "^6.4.7"
+    "@types/nodemailer": "^6.4.7",
+    "react-player": "^2.11.2",
+    "react-redux": "^8.0.5",
+    "react-toastify": "^9.1.1"
   }
 }
