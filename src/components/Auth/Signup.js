@@ -90,45 +90,45 @@ const SignupCard = () => {
           className={styles.auth_card}
         >
           <Typography alignItems="center">Signup</Typography>
-          <TextField
+          {/* <TextField
             placeholder="Username"
             value={formData.username}
             name="username"
             onChange={handleChange}
             className={styles.textFields}
-          />
-          <TextField
+          /> */}
+          {/* <TextField
             placeholder="Email"
             value={formData.email}
             name="email"
             onChange={handleChange}
             type="email"
             className={styles.textFields}
-          />
-          <TextField
+          /> */}
+          {/* <TextField
             placeholder="Password"
             value={formData.password}
             name="password"
             onChange={handleChange}
             className={styles.textFields}
-          />
-          <TextField
+          /> */}
+          {/* <TextField
             placeholder="Confirm password"
             value={formData.confirmPassword}
             name="confirmPassword"
             onChange={handleChange}
             className={styles.textFields}
-          />
+          /> */}
 
           {/* only if signup is succssful then only */}
           {/* <Link href="/bankDetails"> */}
-          <Button onClick={handleSubmit}>Submit</Button>
+          {/* <Button onClick={handleSubmit}>Submit</Button> */}
           {/* </Link> */}
-          <Link href="/signin" className={styles.navigate_link}>
-            Already have an account
-          </Link>
+          <Typography variant="h4" textAlign='center'>
+            Loanify
+          </Typography>
 
-          <Button type="submit" onClick={signGoogle}>
+          <Button type="submit" onClick={signGoogle} variant='contained'>
             Signin with google
           </Button>
         </Card>
