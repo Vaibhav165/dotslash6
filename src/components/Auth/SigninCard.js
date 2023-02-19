@@ -3,26 +3,38 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { useSession, signIn, signOut, getSession } from "next-auth/react";
 import styles from "../../styles/Auth.module.css";
+import { useRouter } from "next/router";
+import useToast from "@/Hooks/useToast";
 
 const SigninCard = () => {
-
-  const { data: session } = useSession();
+  const router = useRouter();
   const [isBorrower, setIsBorrower] = useState(false);
   const handleSwitch = () => {
     setIsBorrower(!isBorrower);
   };
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+
+  const notify = useToast();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   // for signin and signup card
   const [isSignup, setIsSignup] = useState(false);
-  const [checkPassword, setCheckPassword] = useState(false);
-  // const handleSubmit = (e) => {
-  //   // dispatch
-  //   e.preventDefault();
-  //   console.log(formData);
-  // };
+  const [errorMessage, setErrormessage] = useState('');
+  const handleSubmit = async (e) => {
+    // dispatch
+    e.preventDefault();
+    const payload = { email, password }
+    const result = await signIn('credentials', { ...payload, redirect: false })
+    console.log(result)
+
+    if (!result.error) {
+      router.push('/');
+      notify('success', 'Login successfull')
+    }
+    else {
+      setErrormessage(result.error);
+    }
+  };
+  const { data: session } = useSession();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -30,7 +42,7 @@ const SigninCard = () => {
 
   return (
     <>
-      <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit}>
         <Card
           sx={{
             width: {
@@ -44,17 +56,17 @@ const SigninCard = () => {
           <Typography alignItems="center">Signin</Typography>
           <TextField
             placeholder="Email"
-            value={formData.email}
+            value={email}
             name="email"
-            onChange={handleChange}
+            onChange={e => setEmail(e.target.value)}
             type="email"
             className={styles.textFields}
           />
           <TextField
             placeholder="Password"
-            value={formData.password}
+            value={password}
             name="password"
-            onChange={handleChange}
+            onChange={e => setPassword(e.target.value)}
             className={styles.textFields}
           />
           {/* only if signup is succssful then only */}
