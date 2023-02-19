@@ -163,7 +163,7 @@ const Profile = () => {
                       onChange={(e) => setEmail(e.target.value)}
                     />
                   </Stack>
-                  <Button
+                  {/* <Button
                     variant="contained"
                     sx={{
                       backgroundColor: "#1876d1",
@@ -174,7 +174,7 @@ const Profile = () => {
                     onClick={submitHandler}
                   >
                     Submit
-                  </Button>
+                  </Button> */}
                 </Stack>
               </Box>
               <Box

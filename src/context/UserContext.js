@@ -24,7 +24,7 @@ export const UserProvider = ({ children }) => {
       method: "GET",
     });
     const resjson = await res.json();
-    console.log(resjson);
+    // console.log(resjson);
     resjson.data.map((user) => {
       if (user.email === session.user.email) {
         setUser(user);
@@ -33,7 +33,7 @@ export const UserProvider = ({ children }) => {
   };
   useEffect(() => {
     if (session && !user) {
-      console.log(session);
+      //   console.log(session);
       fetchUserByEmail();
       // fetchUser();
     }

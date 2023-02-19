@@ -19,48 +19,49 @@ function Navbar() {
         className={styles.Navbar}
       >
         <Box>
-          <p>
-            <Link href="/" className={styles.nav_logo}>
-              Loanify
-            </Link>
-          </p>
+          {/* <p> */}
+          <Link href="/" className={styles.nav_logo}>
+            Loanify
+          </Link>
+          {/* </p> */}
         </Box>
         <Stack direction="row">
           <Link href="/" className={styles.nav_links}>
-            <p
+            <Typography
               sx={{
                 padding: "10px",
               }}
             >
               Home
-            </p>
+            </Typography>
           </Link>
           <Link href="/about" className={styles.nav_links}>
-            <p
+            <Typography
               sx={{
                 padding: "10px",
               }}
             >
               About Us
-            </p>
+            </Typography>
           </Link>
           <Link href="/contact" className={styles.nav_links}>
-            <p
+            <Typography
               sx={{
                 padding: "10px",
               }}
             >
               Contact
-            </p>
+            </Typography>
           </Link>
-
-          <Typography
-            sx={{
-              padding: "10px",
-            }}
-          >
-            {session && session.user.name}
-          </Typography>
+          <Link href="/profile" className={styles.nav_links}>
+            <Typography
+              sx={{
+                padding: "10px",
+              }}
+            >
+              {session && session.user.name}
+            </Typography>
+          </Link>
         </Stack>
         {/* {isLoggedIn ? (
           <>
@@ -69,7 +70,7 @@ function Navbar() {
 
         <Box>
           {session ? (
-            user.bankInfo ? (
+            user?.bankInfo ? (
               <Link href="/loans" className={styles.signin_links}>
                 <Button variant="contained">Lender</Button>
               </Link>
