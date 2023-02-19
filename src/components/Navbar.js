@@ -1,15 +1,17 @@
 import React, { useState, useContext } from "react";
-import { Stack, Box, Typography, Button } from "@mui/material";
+import { Stack, Box, Typography, Button, Card } from "@mui/material";
 import styles from "../styles/Navbar.module.css";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import UserContext from "@/context/UserContext";
 
 function Navbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const { data: session } = useSession();
   const { user, setUser } = useContext(UserContext);
-  console.log("from an", user);
+  const [isProfile, setIsProfile] = useState(false);
+  const profileHandler = () => {
+    setIsProfile(!isProfile);
+  };
+  const { data: session } = useSession();
   return (
     <div>
       <Stack
@@ -19,79 +21,92 @@ function Navbar() {
         className={styles.Navbar}
       >
         <Box>
-          {/* <p> */}
-          <Link href="/" className={styles.nav_logo}>
-            Loanify
-          </Link>
-          {/* </p> */}
+          <p>
+            <Link href="/" className={styles.nav_logo}>
+              Loanify
+            </Link>
+          </p>
         </Box>
         <Stack direction="row">
           <Link href="/" className={styles.nav_links}>
-            <Typography
+            <p
               sx={{
                 padding: "10px",
               }}
             >
               Home
-            </Typography>
+            </p>
           </Link>
           <Link href="/about" className={styles.nav_links}>
-            <Typography
+            <p
               sx={{
                 padding: "10px",
               }}
             >
               About Us
-            </Typography>
+            </p>
           </Link>
           <Link href="/contact" className={styles.nav_links}>
-            <Typography
+            <p
               sx={{
                 padding: "10px",
               }}
             >
               Contact
-            </Typography>
-          </Link>
-          <Link href="/profile" className={styles.nav_links}>
-            <Typography
-              sx={{
-                padding: "10px",
-              }}
-            >
-              {session && session.user.name}
-            </Typography>
+            </p>
           </Link>
         </Stack>
-        {/* {isLoggedIn ? (
-          <>
-            <Typography>Name</Typography>
-          </> */}
 
         <Box>
           {session ? (
-            user?.bankInfo ? (
-              <Link href="/loans" className={styles.signin_links}>
-                <Button variant="contained">Lender</Button>
-              </Link>
-            ) : (
-              <Link href="/bankDetails" className={styles.signin_links}>
-                <Button variant="contained">Lender</Button>
-              </Link>
-            )
-          ) : (
-            <Link href="/signin" className={styles.signin_links}>
-              <Button variant="contained">Lender</Button>
-            </Link>
-          )}
+            <>
+              <Stack direction="row">
+                <Button onClick={profileHandler}>
+                  <img src={session.user.image} className={styles.navbar_img} />
+                </Button>
+                <Typography
+                  sx={{
+                    padding: "10px",
+                  }}
+                >
+                  <Link href="/profile">{session && session.user?.name}</Link>
+                </Typography>
+              </Stack>
+              {isProfile && (
+                <>
+                  <Card
+                    sx={{
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Button onClick={() => signOut()}>Logout</Button>
 
-          {session ? (
-            <Link href="/loanDetails" className={styles.signin_links}>
-              <Button>Borrower</Button>
-            </Link>
+                    {user?.bankInfo ? (
+                      <Link href="/loans" className={styles.signin_links}>
+                        <Button variant="contained">Lender</Button>
+                      </Link>
+                    ) : (
+                      <Link href="/bankDetails" className={styles.signin_links}>
+                        <Button variant="contained">Lender</Button>
+                      </Link>
+                    )}
+
+                    {user?.bankInfo ? (
+                      <Link href="/loanDetails" className={styles.signin_links}>
+                        <Button>Borrower</Button>
+                      </Link>
+                    ) : (
+                      <Link href="/bankDetails" className={styles.signin_links}>
+                        <Button>Borrower</Button>
+                      </Link>
+                    )}
+                  </Card>
+                </>
+              )}
+            </>
           ) : (
-            <Link href="/signin" className={styles.signin_links}>
-              <Button>Borrower</Button>
+            <Link href="/signup" className={styles.signin_links}>
+              <Button variant="contained">Login</Button>
             </Link>
           )}
         </Box>
@@ -102,3 +117,17 @@ function Navbar() {
 }
 
 export default Navbar;
+
+export const getServerSideProps = async (context) => {
+  const session = await getSession(context);
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/sigin",
+      },
+    };
+  }
+  return {
+    props: { session },
+  };
+};

@@ -1,5 +1,6 @@
 import { TextField, Card, Typography, Button } from "@mui/material";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useState, useContext } from "react";
 import styles from "../styles/Auth.module.css";
 import { useSession } from "next-auth/react";
@@ -9,9 +10,10 @@ import UserContext from "@/context/UserContext";
 const bankDetails = () => {
   const notify = useToast();
   const { user, setUser } = useContext(UserContext);
-  console.log(user, user?.bankInfo.holderName);
+  //   console.log(user);
+  const router = useRouter();
   const [formData, setFormData] = useState({
-    holderName: user?.bankInfo.holderName,
+    holderName: "",
     accountNumber: "",
     IFC: "",
     bankName: "",
@@ -28,6 +30,7 @@ const bankDetails = () => {
       formData.holderName &&
       formData.bankName
     ) {
+      console.log(formData);
       const res = await fetch("/api/bankDetails", {
         method: "Post",
         body: JSON.stringify({
@@ -59,6 +62,11 @@ const bankDetails = () => {
       });
       const respjson = await resp.json();
       console.log(respjson);
+      if (resjson.status) {
+        notify("info", resjson.data.cibil);
+        router.push("/profile");
+      }
+
       //   router.push("/loanDetails");
     }
     // if (!(formData.pdfFile && formData.pdfFile.type === "application/pdf")) {
@@ -89,7 +97,7 @@ const bankDetails = () => {
             value={
               formData.accountNumber
                 ? formData.accountNumber
-                : user?.bankInfo.accountNumber
+                : user?.bankInfo?.accountNumber
             }
             name="accountNumber"
             onChange={handleChange}
@@ -98,7 +106,7 @@ const bankDetails = () => {
 
           <TextField
             placeholder="IFC"
-            value={formData.IFC ? formData.IFC : user?.bankInfo.ifc}
+            value={formData.IFC ? formData.IFC : user?.bankInfo?.ifc}
             name="IFC"
             onChange={handleChange}
             className={styles.textFields}
@@ -107,7 +115,7 @@ const bankDetails = () => {
           <TextField
             placeholder="Bank Name"
             value={
-              formData.bankName ? formData.bankName : user?.bankInfo.bankName
+              formData.bankName ? formData.bankName : user?.bankInfo?.bankName
             }
             name="bankName"
             onChange={handleChange}
@@ -119,7 +127,7 @@ const bankDetails = () => {
             value={
               formData.holderName
                 ? formData.holderName
-                : user?.bankInfo.holderName
+                : user?.bankInfo?.holderName
             }
             name="holderName"
             onChange={handleChange}
@@ -128,7 +136,7 @@ const bankDetails = () => {
 
           <TextField
             placeholder="Salary in numbers"
-            value={formData.salary ? formData.salary : user?.bankInfo.salary}
+            value={formData.salary ? formData.salary : user?.bankInfo?.salary}
             name="salary"
             onChange={handleChange}
             className={styles.textFields}

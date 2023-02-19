@@ -29,6 +29,9 @@ const BankDetails = () => {
           <Grid item xs={12} md={12}>
             <Typography>IFSC Code: {user?.bankInfo.ifsc}</Typography>
           </Grid>
+          <Grid item xs={12} md={12}>
+            <Typography>CIBIL Score: {user?.CIBIL}</Typography>
+          </Grid>
         </Grid>
       </Grid>
     </Grid>
