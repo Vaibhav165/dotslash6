@@ -1,6 +1,15 @@
-function Navbar () {
+import React, { useState, useContext } from "react";
+import { Stack, Box, Typography, Button } from "@mui/material";
+import styles from "../styles/Navbar.module.css";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
+import UserContext from "@/context/UserContext";
+
+function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { data: session } = useSession();
+  const { user, setUser } = useContext(UserContext);
+  console.log("from an", user);
   return (
     <div>
       <Stack
@@ -60,9 +69,15 @@ function Navbar () {
 
         <Box>
           {session ? (
-            <Link href="/loans" className={styles.signin_links}>
-              <Button variant="contained">Lender</Button>
-            </Link>
+            user.bankInfo ? (
+              <Link href="/loans" className={styles.signin_links}>
+                <Button variant="contained">Lender</Button>
+              </Link>
+            ) : (
+              <Link href="/bankDetails" className={styles.signin_links}>
+                <Button variant="contained">Lender</Button>
+              </Link>
+            )
           ) : (
             <Link href="/" className={styles.signin_links}>
               <Button variant="contained">Lender</Button>
@@ -86,17 +101,3 @@ function Navbar () {
 }
 
 export default Navbar;
-
-export const getServerSideProps = async (context) => {
-  const session = await getSession(context);
-  if (!session) {
-    return {
-      redirect: {
-        destination: '/sigin'
-      }
-    }
-  }
-  return {
-    props: { session }
-  }
-}

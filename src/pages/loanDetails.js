@@ -1,16 +1,18 @@
 import { TextField, Card, Typography, Button, Stack } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { toast } from "react-toastify";
 import styles from "../styles/Auth.module.css";
 import useToast from "/src/Hooks/useToast";
 import { useSession } from "next-auth/react";
+import UserContext from "@/context/UserContext";
 
 const loanDetails = () => {
   const { data: session } = useSession();
   const router = useRouter();
   const [isBorrower, setIsBorrower] = useState(false);
+  const { user, setUser } = useContext(UserContext);
   const [formData, setFormData] = useState({
     loanAmount: "",
     interestRate: "",
@@ -21,7 +23,12 @@ const loanDetails = () => {
   // const salary = Math.floor(Math.random() * 100000);
   const notify = useToast();
   // for signin and signup card
-  const maxLoanAmount = 1000000;
+  console.log(user);
+  var maxLoanAmount = 0;
+  if (user) {
+    maxLoanAmount = Math.floor(user.maxLoanAmount);
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -50,14 +57,18 @@ const loanDetails = () => {
       } else {
         notify("error", resjson.message);
       }
-      router.push('/success');
+      router.push("/success");
     }
   };
 
-  let interest = parseInt(formData.loanAmount * (formData.interestRate * 0.01)) / (formData.tenure * 12);
-  let emiAmount = parseInt((formData.loanAmount / (formData.tenure * 12)) + interest)
+  let interest =
+    parseInt(formData.loanAmount * (formData.interestRate * 0.01)) /
+    (formData.tenure * 12);
+  let emiAmount = parseInt(
+    formData.loanAmount / (formData.tenure * 12) + interest
+  );
 
-  console.log(emiAmount)
+  console.log(emiAmount);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
