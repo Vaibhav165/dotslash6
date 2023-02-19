@@ -80,7 +80,7 @@ function Navbar() {
               </Link>
             )
           ) : (
-            <Link href="/" className={styles.signin_links}>
+            <Link href="/signin" className={styles.signin_links}>
               <Button variant="contained">Lender</Button>
             </Link>
           )}
@@ -90,7 +90,7 @@ function Navbar() {
               <Button>Borrower</Button>
             </Link>
           ) : (
-            <Link href="/" className={styles.signin_links}>
+            <Link href="/signin" className={styles.signin_links}>
               <Button>Borrower</Button>
             </Link>
           )}
